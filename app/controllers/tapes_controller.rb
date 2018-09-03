@@ -5,17 +5,11 @@ class TapesController < ApplicationController
 
   def new
     @tape = Tape.new
-
     @musics = Music.all
-
-    @music_tscollection = Array.new()
-    @musics.each do |music|
-      @music_tscollection.push music.ts
-    end
+    @music_tscollection = Music.pluck(:ts)
   end
 
   def create
-    
     @correct_music1 = Music.find_by_ts(params[:tape][:m1])
     @correct_music2 = Music.find_by_ts(params[:tape][:m2])
     @correct_music3 = Music.find_by_ts(params[:tape][:m3])
@@ -31,16 +25,16 @@ class TapesController < ApplicationController
 
     tape.tape_title = params[:tape][:tape_title]
     tape.user_id = current_user.id
-    tape.m1 = @correct_music1.id
-    tape.m2 = @correct_music2.id
-    tape.m3 = @correct_music3.id
-    tape.m4 = @correct_music4.id
-    tape.m5 = @correct_music5.id
-    tape.m6 = @correct_music6.id
-    tape.m7 = @correct_music7.id
-    tape.m8 = @correct_music8.id
-    tape.m9 = @correct_music9.id
-    tape.m10 = @correct_music10.id
+    tape.m1 = @correct_music1.try(:id) || nil
+    tape.m2 = @correct_music2.try(:id) || nil
+    tape.m3 = @correct_music3.try(:id) || nil
+    tape.m4 = @correct_music4.try(:id) || nil
+    tape.m5 = @correct_music5.try(:id) || nil
+    tape.m6 = @correct_music6.try(:id) || nil
+    tape.m7 = @correct_music7.try(:id) || nil
+    tape.m8 = @correct_music8.try(:id) || nil
+    tape.m9 = @correct_music9.try(:id) || nil
+    tape.m10 = @correct_music10.try(:id) || nil
     tape.save
 
     redirect_to new_tape_path
