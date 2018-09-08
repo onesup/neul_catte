@@ -40,8 +40,21 @@ class TapesController < ApplicationController
     redirect_to new_tape_path
   end
 
-  private
-  def set_data
-    @tape = find_by.params[:tape_id]
+  def show
+    @tape = Tape.find_by(id: params[:id])
+
+    song = []
+    song << @tape.m1
+    song << @tape.m2
+    song << @tape.m3
+    song << @tape.m4
+    song << @tape.m5
+    song << @tape.m6
+    song << @tape.m7
+    song << @tape.m8
+    song << @tape.m9
+    song << @tape.m10
+
+    @list = Music.where(id: song)
   end
 end
